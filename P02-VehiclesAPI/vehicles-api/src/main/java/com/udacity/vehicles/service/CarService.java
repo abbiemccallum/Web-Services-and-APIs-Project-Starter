@@ -1,8 +1,11 @@
 package com.udacity.vehicles.service;
 
 import com.udacity.vehicles.VehiclesApiApplication;
+import com.udacity.vehicles.client.maps.Address;
 import com.udacity.vehicles.client.maps.MapsClient;
+import com.udacity.vehicles.client.prices.Price;
 import com.udacity.vehicles.client.prices.PriceClient;
+import com.udacity.vehicles.domain.Location;
 import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.domain.car.CarRepository;
 import java.util.List;
@@ -44,23 +47,11 @@ public class CarService {
      * @return the requested car's information, including location and price
      */
     public Car findById(Long id) {
-        /**
-         * TODO: Find the car by ID from the `repository` if it exists.
-         *   If it does not exist, throw a CarNotFoundException
-         *   Remove the below code as part of your implementation.
-         */
-
         Optional<Car> optionalId = repository.findById(id);
         Car existingCar = optionalId.orElseThrow(CarNotFoundException::new);
 
-        /**
-         * TODO: Use the Pricing Web client you create in `VehiclesApiApplication`
-         *   to get the price based on the `id` input'
-         * TODO: Set the price of the car
-         * Note: The car class file uses @transient, meaning you will need to call
-         *   the pricing service each time to get the price.
-         */
-
+        String price = priceClient.getPrice(id);
+        existingCar.setPrice(price);
 
         /**
          * TODO: Use the Maps Web client you create in `VehiclesApiApplication`
@@ -71,7 +62,9 @@ public class CarService {
          * meaning the Maps service needs to be called each time for the address.
          */
 
-
+        Location carLocation = existingCar.getLocation();
+        Location carAddress = mapsClient.getAddress(carLocation);
+        existingCar.setLocation(carLocation);
         return existingCar;
     }
 
@@ -98,16 +91,9 @@ public class CarService {
      * @param id the ID number of the car to delete
      */
     public void delete(Long id) {
-        /**
-         * TODO: Find the car by ID from the `repository` if it exists.
-         *   If it does not exist, throw a CarNotFoundException
-         */
+        Optional<Car> optionalId = repository.findById(id);
+        Car existingCar = optionalId.orElseThrow(CarNotFoundException::new);
 
-
-        /**
-         * TODO: Delete the car from the repository.
-         */
-
-
+        repository.delete(existingCar);
     }
 }
