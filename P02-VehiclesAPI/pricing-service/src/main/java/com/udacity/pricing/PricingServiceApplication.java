@@ -1,7 +1,5 @@
 package com.udacity.pricing;
 
-import com.udacity.pricing.service.PricingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
