@@ -11,7 +11,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.Collections;
 
-// Note, this code was taken from course section: Lab Solution: Document Your Dog API
+// Note - this code was taken from course section: Lab Solution: Document Your Dog API
 
 @Configuration
 @EnableSwagger2
