@@ -127,10 +127,10 @@ public class CarControllerTest {
     @Test
     public void updateCar() throws Exception {
 
-        Car car = updatedCar();
+        Car updatedCar = getUpdatedCar();
         mvc.perform(
                         put(new URI("/cars/1"))
-                                .content(json.write(car).getJson())
+                                .content(json.write(updatedCar).getJson())
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
@@ -161,7 +161,7 @@ public class CarControllerTest {
         return car;
     }
 
-    private Car updatedCar() {
+    private Car getUpdatedCar() {
         Car car = new Car();
         car.setLocation(new Location(40.730610, -73.935242));
         Details details = new Details();
